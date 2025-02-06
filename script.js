@@ -1,2 +1,4 @@
 alert("hello my script")
-console.log("hello console")
+
+const a = 1;
+const b = 2;
