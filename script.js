@@ -8,8 +8,10 @@ function one(x) {
         const isNumber = function (a) {
             return !isNaN(parseInt(a)) && isFinite(a)
         }
-        console.log(a);
-        console.log(x);
+        if (a === null) {
+            alert("Игра окончена");
+            return
+        }
         if (a > x) {
             alert("Загаданное число меньше");
             two()
@@ -24,9 +26,7 @@ function one(x) {
         }
         if (a == x) {
             alert("Поздравляю, Вы угадали!!!");
-        }
-        if (a === null) {
-            alert("Игра окончена");
+            return
         }
     }
 
