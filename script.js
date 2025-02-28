@@ -83,5 +83,3 @@ const appData = {
 
 appData.start()
 
-console.log(appData.fullPrice);
-console.log(appData.servicePercentPrice);
