@@ -22,14 +22,22 @@ const appData = {
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num)
     },
-    isString: function (str) {
-        return
+    isString: function (num) {
+        return isNaN(num)
     },
     asking: function () {
-        appData.title = prompt("Как называется ваш проект?", "zbs")
+
+        do {
+            appData.title = prompt("Как называется ваш проект?",)
+        } while (!appData.isString(appData.title))
 
         for (let i = 0; i < 2; i++) {
-            let name = prompt("Какие типы экранов нужно разработать?", "top")
+            let name
+
+            do {
+                name = prompt("Какие типы экранов нужно разработать?",)
+            } while (!appData.isString(name))
+
             let price = 0
 
             do {
@@ -41,7 +49,11 @@ const appData = {
 
         for (let i = 0; i < 2; i++) {
             let price = 0
-            let name = prompt("Какой дополнительный тип услуги нужен?", "sisi")
+            let name
+
+            do {
+                name = prompt("Какой дополнительный тип услуги нужен?",)
+            } while (!appData.isString(name))
 
             do {
                 price = prompt("Сколько это будет стоить?", "1000")
@@ -53,7 +65,7 @@ const appData = {
         appData.adaptive = confirm("Нужен ли адаптив на сайте?");
     },
     addPrices: function () {
-        for (let screen of appData.screens) {  //тут редюс
+        for (let screen of appData.screens) {
             appData.screenPrice += +screen.price
         }
 
@@ -92,12 +104,8 @@ const appData = {
         console.log(appData.fullPrice);
         console.log(appData.servicePercentPrice);
         console.log(appData.screens);
-
-        console.log(appData.title);
-        console.log(appData.services);
     }
 }
 
 appData.start()
 
-// реализовать методом редюс 13 мин. итератор цикла переменная i дз 6 мин
