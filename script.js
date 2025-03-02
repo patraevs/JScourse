@@ -2,84 +2,102 @@
 
 const appData = {
     title: "",
-    screens: "",
+    screens: [],
     screenPrice: 0,
     adaptive: true,
     rollback: 69,
+    allServicePrices: 0,
     fullPrice: 0,
     servicePercentPrice: 0,
-    allServicePrices: 0,
-    service1: "",
-    service2: "",
-    rollbackMessage: "",
+    services: {},
     start: function () {
-        this.asking()
-        this.allServicePrices = this.getAllServicePrices()
-        this.fullPrice = this.getFullPrice()
-        this.title = this.getTitle()
-        this.servicePercentPrice = this.getServicePercentPrices()
-        this.rollbackMessage = this.getRollbackMessage()
-        this.logger()
-    },
-    logger: function () {
-        for (let key in this) {
-            console.log("Ключ:" + key + " " + "Значение:" + this[key]);
-        }
-    },
-    asking: function () {
-        this.title = prompt("Как называется ваш проект?")
-        this.screens = prompt("Какие типы экранов нужно разработать?")
-        this.screenPrice = +prompt("Сколько будет стоить данная работа?")
-        do {
-            this.screenPrice = +prompt("Сколько будет стоить данная работа?")
-        } while (!this.isNumber(this.screenPrice))
-        this.adaptive = confirm("Нужен ли адаптив на сайте?");
+        appData.asking()
+        appData.addPrices()
+        appData.getFullPrice()
+        appData.getServicePercentPrices()
+        appData.getTitle()
+
+        appData.logger()
     },
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num)
     },
-    getAllServicePrices: function () {
+    isString: function (str) {
+        return
+    },
+    asking: function () {
+        appData.title = prompt("Как называется ваш проект?", "zbs")
+
         for (let i = 0; i < 2; i++) {
-            if (i === 0) {
-                this.service1 = prompt("Какой дополнительный тип услуги нужен?")
-            } else if (i === 1) {
-                this.service2 = prompt("Какой дополнительный тип услуги нужен?");
-            }
-            this.allServicePrices += +prompt("Сколько это будет стоить?");
-            while (!this.isNumber(this.allServicePrices)) {
-                this.allServicePrices += +prompt("Сколько это будет стоить?")
-            }
+            let name = prompt("Какие типы экранов нужно разработать?", "top")
+            let price = 0
+
+            do {
+                price = prompt("Сколько будет стоить данная работа?", "5000")
+            } while (!appData.isNumber(price))
+
+            appData.screens.push({ id: i, name: name, price: price })
         }
-        return this.allServicePrices
+
+        for (let i = 0; i < 2; i++) {
+            let price = 0
+            let name = prompt("Какой дополнительный тип услуги нужен?", "sisi")
+
+            do {
+                price = prompt("Сколько это будет стоить?", "1000")
+            } while (!appData.isNumber(price))
+
+            appData.services[name] = +price
+        }
+
+        appData.adaptive = confirm("Нужен ли адаптив на сайте?");
+    },
+    addPrices: function () {
+        for (let screen of appData.screens) {  //тут редюс
+            appData.screenPrice += +screen.price
+        }
+
+        for (let key in appData.services) {
+            appData.allServicePrices += appData.services[key]
+        }
     },
     getFullPrice: function () {
-        return this.screenPrice + this.allServicePrices
-    },
-    getTitle: function () {
-        return this.title.trim()[0].toUpperCase() + this.title.trim().slice(1).toLowerCase()
+        appData.fullPrice = +appData.screenPrice + appData.allServicePrices
     },
     getServicePercentPrices: function () {
-        return this.fullPrice - (this.fullPrice * (this.rollback / 100))
+        appData.servicePercentPrice = appData.fullPrice - (appData.fullPrice * (appData.rollback / 100))
     },
-    getRollbackMessage: function () {
+    getTitle: function () {
+        appData.title = appData.title.trim()[0].toUpperCase() + appData.title.trim().slice(1).toLowerCase()
+    },
+    getRollbackMessage: function (price) {
         switch (true) {
-            case this.fullPrice >= 30000:
+            case price >= 30000:
                 return "Даем скидку в 10%"
                 break
-            case 30000 > this.fullPrice && this.fullPrice >= 15000:
+            case 30000 > price && price >= 15000:
                 return "Даем скидку в 5%"
                 break
-            case 15000 > this.fullPrice && this.fullPrice >= 0:
+            case 15000 > price && price >= 0:
                 return "Скидка не предусмотрена"
                 break
-            case this.fullPrice < 0:
+            case price < 0:
                 return "Что то пошло не так"
                 break
             default:
                 return "Не верно ни одно значение"
         }
+    },
+    logger: function () {
+        console.log(appData.fullPrice);
+        console.log(appData.servicePercentPrice);
+        console.log(appData.screens);
+
+        console.log(appData.title);
+        console.log(appData.services);
     }
 }
 
 appData.start()
 
+// реализовать методом редюс 13 мин. итератор цикла переменная i дз 6 мин
