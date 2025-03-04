@@ -28,20 +28,20 @@ const appData = {
     asking: function () {
 
         do {
-            appData.title = prompt("Как называется ваш проект?",)
+            appData.title = prompt("Как называется ваш проект?", "Вёрстка")
         } while (!appData.isString(appData.title))
 
         for (let i = 0; i < 2; i++) {
             let name
 
             do {
-                name = prompt("Какие типы экранов нужно разработать?",)
+                name = prompt("Какие типы экранов нужно разработать?", "Простые")
             } while (!appData.isString(name))
 
             let price = 0
 
             do {
-                price = prompt("Сколько будет стоить данная работа?", "5000")
+                price = prompt("Сколько будет стоить данная работа?", "10000")
             } while (!appData.isNumber(price))
 
             appData.screens.push({ id: i, name: name, price: price })
@@ -52,7 +52,7 @@ const appData = {
             let name
 
             do {
-                name = prompt("Какой дополнительный тип услуги нужен?",)
+                name = prompt("Какой дополнительный тип услуги нужен?", "Метрика")
             } while (!appData.isString(name))
 
             do {
@@ -109,3 +109,33 @@ const appData = {
 
 appData.start()
 
+const titleLayout = document.getElementsByTagName("h1")
+console.log(titleLayout[0]);
+
+const buttons = document.getElementsByClassName("handler_btn")
+console.log(buttons);
+
+const button = document.querySelector(".screen-btn")
+console.log(button);
+
+const elementsPercent = document.querySelectorAll(".other-items + .percent")
+console.log(elementsPercent);
+
+const elementsNumber = document.querySelectorAll(".other-items + .number")
+console.log(elementsNumber);
+
+const input = document.querySelector(".rollback input[type=range]")
+console.log(input);
+
+const span = document.querySelector(".rollback .range-value")
+console.log(span);
+
+const allInput = document.getElementsByClassName("total-input")
+console.log(allInput[0]);
+console.log(allInput[1]);
+console.log(allInput[2]);
+console.log(allInput[3]);
+console.log(allInput[4]);
+
+let allBlock = document.querySelectorAll(".screen")
+console.log(allBlock);
