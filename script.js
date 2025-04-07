@@ -1,17 +1,35 @@
-let title = "project";
-let screens = "Простые, Сложные, Интерактивные";
-let screenPrice = 7;
-let rollback = 69;
-let fullPrice = 300;
-let adaptive6 = true;
+'use strict';
 
-console.log(typeof title);
-console.log(typeof fullPrice);
-console.log(typeof adaptive6);
-console.log(screens.length);
-console.log("Стоимость верстки экранов " + screenPrice + " рублей. " + " Стоимость разработки сайта " + fullPrice + " рублей.");
-console.log(screens.toLowerCase().split());
-console.log((fullPrice * (rollback / 100)) / (fullPrice / 100) + "%");
+const DomElement = function (selector, height, width, bg, fontSize) {
+    this.selector = selector;
+    this.height = height;
+    this.width = width;
+    this.bg = bg;
+    this.fontSize = fontSize;
+}
+
+DomElement.prototype.createElement = function () {
+    let element;
+    if (this.selector.startsWith('.')) {
+        element = document.createElement('div');
+        element.className = this.selector.slice(1);
+    } else if (this.selector.startsWith('#')) {
+        element = document.createElement('p');
+        element.id = this.selector.slice(1);
+    }
+
+    element.style.height = `${this.height}px`;
+    element.style.width = `${this.width}px`;
+    element.style.background = this.bg;
+    element.style.fontSize = `${this.fontSize}px`;
+    element.textContent = 'Любой текст';
+
+    document.body.appendChild(element);
+}
 
 
+const newElement = new DomElement('.block', 100, 200, 'red', 16);
+newElement.createElement();
 
+const newElementId = new DomElement('#best', 150, 300, 'blue', 20);
+newElementId.createElement();
